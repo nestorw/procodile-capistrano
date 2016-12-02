@@ -33,7 +33,7 @@ namespace :procodile do
     end
   end
 
-  after 'deploy:finished', "procodile:restart"
+  after 'deploy:published', "procodile:restart"
 
   def procodile_args(command, options = "")
     if processes = fetch(:processes, nil)
