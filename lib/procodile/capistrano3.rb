@@ -12,7 +12,7 @@ namespace :load do
   end
 end
 namespace :procodile do
-  within current_path do
+  within release_path do
 
     desc 'Start procodile processes'
     task :start do
