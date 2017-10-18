@@ -16,7 +16,7 @@ namespace :procodile do
   desc 'Start procodile processes'
   task :start do
     on roles(fetch(:procodile_roles, [:app])) do
-      within :current_path do
+      within current_path do
         execute :procodile, procodile_args(:start)
       end
     end
@@ -25,7 +25,7 @@ namespace :procodile do
   desc 'Stop procodile processes'
   task :stop do
     on roles(fetch(:procodile_roles, [:app])) do
-      within :current_path do
+      within current_path do
         execute :procodile, procodile_args(:stop)
       end
     end
@@ -34,7 +34,7 @@ namespace :procodile do
   desc 'Restart procodile processes'
   task :restart do
     on roles(fetch(:procodile_roles, [:app])) do
-      within :current_path do
+      within current_path do
         execute :procodile, procodile_args(:restart)
       end
     end
