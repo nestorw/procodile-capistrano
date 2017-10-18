@@ -12,36 +12,40 @@ namespace :load do
   end
 end
 namespace :procodile do
-  within :current_path do
 
-    desc 'Start procodile processes'
-    task :start do
-      on roles(fetch(:procodile_roles, [:app])) do
+  desc 'Start procodile processes'
+  task :start do
+    on roles(fetch(:procodile_roles, [:app])) do
+      within :current_path do
         execute :procodile, procodile_args(:start)
       end
     end
+  end
 
-    desc 'Stop procodile processes'
-    task :stop do
-      on roles(fetch(:procodile_roles, [:app])) do
+  desc 'Stop procodile processes'
+  task :stop do
+    on roles(fetch(:procodile_roles, [:app])) do
+      within :current_path do
         execute :procodile, procodile_args(:stop)
       end
     end
+  end
 
-    desc 'Restart procodile processes'
-    task :restart do
-      on roles(fetch(:procodile_roles, [:app])) do
+  desc 'Restart procodile processes'
+  task :restart do
+    on roles(fetch(:procodile_roles, [:app])) do
+      within :current_path do
         execute :procodile, procodile_args(:restart)
       end
     end
+  end
 
-    after 'deploy:published', "procodile:restart"
+  after 'deploy:published', "procodile:restart"
 
-    def procodile_args(command, options = "")
-      if processes = fetch(:processes, nil)
-        options = "-p #{processes} " + options
-      end
-      "#{command} -r #{current_path} #{options}"
+  def procodile_args(command, options = "")
+    if processes = fetch(:processes, nil)
+      options = "-p #{processes} " + options
     end
+    "#{command} -r #{current_path} #{options}"
   end
 end
